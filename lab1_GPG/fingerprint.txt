@@ -1,0 +1,7 @@
+pub   rsa4096 2026-02-02 [SC] [expires: 2026-05-03]
+      920E F4BE FF61 09AE E370  EDD6 E293 75F8 4AF8 5E26
+uid           [ultimate] Yanran Xie (Group 37) <yanra@student.chalmers.se>
+uid           [ultimate] shuozha (Group 37) <shuozha@student.chalmers.se>
+uid           [ultimate] Björn Björkman (Group 37) <bjobjor@student.chalmers.se>
+sub   rsa4096 2026-02-02 [E] [expires: 2026-05-03]
+
