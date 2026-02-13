@@ -2,6 +2,10 @@
 
 /* gcc -std=gnu99 -Wall -g -o mylogin login_linux.c -lcrypt */
 
+#include <signal.h>
+
+// signal(SIGINT, SIG_IGN); /* Ignore Ctrl-C */
+// signal()
 # define MAX_FAIL 5
 
 #include <stdlib.h>
@@ -72,19 +76,15 @@ int main(int argc, char *argv[]) {
       char *encrypted = crypt(user_pass, passwddata->passwd_salt);
       if (encrypted != NULL && !strcmp(encrypted, passwddata->passwd)) {
 
-        // if (passwddata->pwfailed > 0) {
-          // printf("Warning: %d failed login attempt(s) since last login.\n",
-                 // passwddata->pwfailed);
-        // }
-        // passwddata->pwfailed = 0;
+        if (passwddata->pwfailed > 0) {
+          printf("Warning: %d failed login attempt(s) since last login.\n",
+          passwddata->pwfailed);
+        }
+        passwddata->pwfailed = 0;
 
         if (passwddata -> pwfailed <= MAX_FAIL) {
           printf("Warning: %d failed login attempt(s) since last login.\n",
                  passwddata->pwfailed);
-        }else {
-          printf("Too many failed login attempts, Wait 10 seconds\n");
-          sleep(100);
-          passwddata->pwfailed = 0;
         }
 
         passwddata->pwage++;
@@ -104,6 +104,13 @@ int main(int argc, char *argv[]) {
 
       } else {
         passwddata->pwfailed++;
+        
+        if (passwddata -> pwfailed > MAX_FAIL){
+          printf("Too many failed login attempts, Wait 10 seconds\n");
+          sleep(100);
+          passwddata->pwfailed = 0;
+        }
+        
         if (mysetpwent(user, passwddata) != 0) {
           fprintf(stderr, "Failed to update password file\n");
         }
