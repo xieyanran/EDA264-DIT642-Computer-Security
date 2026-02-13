@@ -25,6 +25,10 @@
 #define LENGTH 16
 
 void sighandler() {
+  signal(SIGINT, SIG_IGN);
+  signal(SIGQUIT, SIG_IGN);
+  signal(SIGTSTP, SIG_IGN);
+  signal(SIGHUP, SIG_IGN);
 
   /* add signalhandling routines here */
   /* see 'man 2 signal' */
@@ -100,8 +104,13 @@ int main(int argc, char *argv[]) {
 
         /*  check UID, see setuid(2) */
         /*  start a shell, use execve(2) */
-        execve("/bin/sh", NULL, NULL); /* just a test before step5 */
-
+        /*execve("/bin/sh", NULL, NULL); /* just a test before step5 */
+        if setuid(passwddata ->uid) != 0) {
+          perror("setuid fialed");
+          exit(1);
+        }
+        char *arg[] = {("/bin/sh", NULL)};
+        execve("/bin/sh", args, NULL)
       } else {
         passwddata->pwfailed++;
         
