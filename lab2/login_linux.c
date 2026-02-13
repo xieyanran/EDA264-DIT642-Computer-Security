@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
       /* You have to encrypt user_pass for this to work */
       /* Don't forget to include the salt */
       if (passwddata -> pwfailed >= MAX_FAIL) {
-          printf("Too many failed login attempts, Wait 10 seconds\n");
+          printf("Too many failed login attempts, Wait 100 seconds\n");
           sleep(100);
           continue;
       }
