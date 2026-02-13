@@ -2,6 +2,8 @@
 
 /* gcc -std=gnu99 -Wall -g -o mylogin login_linux.c -lcrypt */
 
+# define MAX_FAIL 5
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -70,11 +72,20 @@ int main(int argc, char *argv[]) {
       char *encrypted = crypt(user_pass, passwddata->passwd_salt);
       if (encrypted != NULL && !strcmp(encrypted, passwddata->passwd)) {
 
-        if (passwddata->pwfailed > 0) {
+        // if (passwddata->pwfailed > 0) {
+          // printf("Warning: %d failed login attempt(s) since last login.\n",
+                 // passwddata->pwfailed);
+        // }
+        // passwddata->pwfailed = 0;
+
+        if (passwddata -> pwfailed <= MAX_FAIL) {
           printf("Warning: %d failed login attempt(s) since last login.\n",
                  passwddata->pwfailed);
+        }else {
+          printf("Too many failed login attempts, Wait 10 seconds\n");
+          sleep(100);
+          passwddata->pwfailed = 0;
         }
-        passwddata->pwfailed = 0;
 
         passwddata->pwage++;
         if (passwddata->pwage > 10) {
