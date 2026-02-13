@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
         /*  check UID, see setuid(2) */
         /*  start a shell, use execve(2) */
         /*execve("/bin/sh", NULL, NULL); /* just a test before step5 */
-        if setuid(passwddata ->uid) != 0) {
+        if (setuid(passwddata ->uid) != 0) {
           perror("setuid fialed");
           exit(1);
         }
