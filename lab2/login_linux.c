@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
           exit(1);
         }
         char *arg[] = {("/bin/sh", NULL)};
-        execve("/bin/sh", args, NULL);
+        execve("/bin/sh", arg, NULL);
       } else {
         passwddata->pwfailed++;
         
